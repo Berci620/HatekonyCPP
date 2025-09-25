@@ -34,10 +34,11 @@ Fraction::Fraction(const int& numerator, const int& denominator)	//_numerator, _
 //{
 //
 //}
-//Fraction::Fraction(const Fraction& fraction)
-//{
-//
-//}
+Fraction::Fraction(const Fraction& fraction)
+{
+	_numerator = fraction._numerator;
+	_denominator = fraction._denominator;
+}
 
 float Fraction::GetFraction() 
 {
