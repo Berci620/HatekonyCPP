@@ -2,15 +2,15 @@
 class Fraction
 {
 public:
-	Fraction(const unsigned& denominator);
-	Fraction(const int& numerator, const unsigned& denominator);
+	Fraction(const int& denominator);
+	Fraction(const int& numerator, const int& denominator);
 	//Fraction(const float& decimalFraction);
 	//Fraction(const Fraction& fraction);
 	float GetFraction();
 
 private:
 	int _numerator;
-	unsigned int _denominator;
+	int _denominator;
 	void Simplify();
 };
 
