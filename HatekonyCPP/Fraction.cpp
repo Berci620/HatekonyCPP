@@ -4,7 +4,7 @@
 #include "Fraction.h"
 
 
-Fraction::Fraction(const int& denominator)	//_denominator constructor
+Fraction::Fraction(int denominator)	//_denominator constructor
 	:_denominator(denominator)
 	, _numerator(1)
 {
@@ -15,8 +15,7 @@ Fraction::Fraction(const int& denominator)	//_denominator constructor
 
 }
 
-
-Fraction::Fraction(const int& numerator, const int& denominator)	//_numerator, _denominator constructor
+Fraction::Fraction(int numerator, int denominator)	//_numerator, _denominator constructor
 	:_denominator(denominator)
 	, _numerator(numerator)
 {
@@ -29,60 +28,73 @@ Fraction::Fraction(const int& numerator, const int& denominator)	//_numerator, _
 
 }
 
+Fraction::Fraction(const double& decimalFraction)
+{
+	FractionFromFloat(decimalFraction);
+	;
+}
 
-//Fraction::Fraction(const float& decimalFraction)
-//{
-//
-//}
 Fraction::Fraction(const Fraction& fraction)
 {
 	_numerator = fraction._numerator;
 	_denominator = fraction._denominator;
 }
 
-float Fraction::GetFraction() 
+
+float Fraction::GetFraction()
 {
 	float result = static_cast<float>(_numerator) / _denominator;
 	return result;
 }
 
-void Fraction::Simplify()
+
+int Fraction::GCD(int a, int b)
 {
-	int numeratorAbs = std::abs(_numerator); //absolute value helper
-	if (numeratorAbs < _denominator)
+	int gcd = std::min(a, b);
+
+	if (a % gcd == 0 && b % gcd == 0)
 	{
-		if (_denominator % _numerator == 0) //if _numerator is the greatest common divisor divide and return
-		{
-			_denominator /= numeratorAbs;
-			_numerator /= numeratorAbs;
-			return;
-		}
-		for (auto i = numeratorAbs / 2; i > 0; i--) //search for the greatest common divisor
-		{
-			if (_numerator % i == 0 && _denominator % i == 0)
-			{
-				_numerator /= i;
-				_denominator /= i;
-				return;
-			}
-		}
+		return gcd;
 	}
 	else
 	{
-		if (_numerator % _denominator == 0) //if _denominator is the greatest common divisor divide and return
-		{
-			_numerator /= _denominator;
-			_denominator /= _denominator;
-			return;
-		}
-		for (auto i = _denominator / 2; i > 0; i--) //search for the greatest common divisor
-		{
-			if (_denominator % i == 0 && _numerator % i == 0)
-			{
-				_numerator /= i;
-				_denominator /= i;
-				return;
-			}
-		}
+		gcd /= 2;
 	}
+
+	while (gcd > 1)
+	{
+		if (a % gcd == 0 && b % gcd == 0)
+		{
+			return gcd;
+		}
+		gcd--;
+	}
+	return gcd;
+}
+
+void Fraction::Simplify()
+{
+	int gcd = GCD(_numerator, _denominator);
+	_denominator /= gcd;
+	_numerator /= gcd;
+}
+
+void Fraction::FractionFromFloat(double decimalFraction)
+{
+	int n = 0, gcd;
+	//int numerator, denominator;
+
+	while (decimalFraction != static_cast<int>(decimalFraction))
+	{
+		decimalFraction *= 10;
+		n++;
+	}
+
+	_numerator = decimalFraction;
+	_denominator = pow(10, n);
+
+	gcd = GCD(_numerator, _denominator);
+
+	_numerator /= gcd;
+	_denominator /= gcd;
 }
