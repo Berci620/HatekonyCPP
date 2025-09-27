@@ -82,13 +82,15 @@ void Fraction::Simplify()
 void Fraction::FractionFromFloat(double decimalFraction)
 {
 	int n = 0, gcd;
-	//int numerator, denominator;
-
-	while (decimalFraction != static_cast<int>(decimalFraction))
+	double delt = 0.0001;
+	
+	while (std::abs(decimalFraction - static_cast<int>(std::round(decimalFraction))) > delt)
 	{
 		decimalFraction *= 10;
 		n++;
 	}
+
+	decimalFraction = std::round(decimalFraction);
 
 	_numerator = decimalFraction;
 	_denominator = pow(10, n);
