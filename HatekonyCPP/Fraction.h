@@ -13,7 +13,7 @@ public:
 	float GetFraction();
 	friend std::ostream& operator<<(std::ostream& os, const Fraction& fraction);
 	friend std::istream& operator>>(std::istream& is, Fraction& fraction);
-
+	
 	Fraction& operator=(const Fraction& other);
 	Fraction& operator+=(const Fraction& other);
 	Fraction operator+(const Fraction& other) const;
@@ -45,3 +45,4 @@ private:
 	void FractionFromFloat(double decimalFraction);
 };
 
+Fraction Parse(const std::string& value);

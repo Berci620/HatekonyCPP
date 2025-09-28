@@ -64,33 +64,10 @@ std::ostream& operator<<(std::ostream& os, const Fraction& fraction)
 
 std::istream& operator>>(std::istream& is, Fraction& fraction)
 {
-	int numerator = 0, denominator = 0, i = 0, idx;
 	std::string input;
 	is >> input;
-	auto pos = input.find('/');
-
-	if (pos != input.npos)
-	{
-		idx = static_cast<int>(pos);
-		while (i < idx)
-		{
-			numerator *= 10;
-			numerator += (static_cast<int>(input[i])-48);
-			i++;
-		}
-		i++;
-		while (i < input.size()) 
-		{
-			denominator *= 10;
-			denominator += (static_cast<int>(input[i])-48);
-			i++;
-		}
-
-		fraction = Fraction(numerator, denominator);
-		return is;
-	}
-
-	throw std::invalid_argument("The input format was not correct! (numerator/denominator)");
+	fraction = Parse(input);
+	return is;
 }
 
 // Basic arithmetic operations
@@ -310,4 +287,41 @@ void Fraction::FractionFromFloat(double decimalFraction)	// Helps the double con
 
 	_numerator /= gcd;
 	_denominator /= gcd;
+}
+
+// Outside functions
+//---------------------------------------------------------------------
+
+Fraction Parse(const std::string& value)
+{
+	int numerator = 0, denominator = 0, i = 0, idx;
+	bool is_negative = 0;
+	auto pos = value.find('/');
+
+	if (pos != value.npos)
+	{
+		if (value[i] == '-') { is_negative = true; i++; }
+
+		idx = static_cast<int>(pos);
+		while (i < idx)
+		{
+			numerator *= 10;
+			numerator += (static_cast<int>(value[i]) - 48);
+			i++;
+		}
+		i++;
+		while (i < value.size())
+		{
+			denominator *= 10;
+			denominator += (static_cast<int>(value[i]) - 48);
+			i++;
+		}
+
+		if (is_negative) { numerator *= -1; }
+
+		Fraction result = Fraction(numerator, denominator);
+		return result;
+	}
+
+	throw std::invalid_argument("The input format was not correct! (numerator/denominator)");
 }
