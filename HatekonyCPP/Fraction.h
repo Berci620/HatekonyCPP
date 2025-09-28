@@ -1,4 +1,7 @@
 #pragma once
+
+#include <string>
+
 class Fraction
 {
 public:
@@ -26,6 +29,11 @@ public:
 	bool operator>=(const Fraction& other) const;
 	bool operator<(const Fraction& other) const;
 	bool operator<=(const Fraction& other) const;
+
+	int ToInt() const;
+	float ToFloat() const;
+	bool ToBool() const;
+	std::string ToString() const;
 
 private:
 	int _numerator;

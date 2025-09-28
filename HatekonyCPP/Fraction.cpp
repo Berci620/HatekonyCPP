@@ -58,7 +58,7 @@ float Fraction::GetFraction()
 
 std::ostream& operator<<(std::ostream& os, const Fraction& fraction)
 {
-	os << fraction._numerator << "/" << fraction._denominator << std::endl;
+	os << fraction.ToString() << std::endl;
 	return os;
 }
 
@@ -189,6 +189,32 @@ bool Fraction::operator<(const Fraction& other) const
 bool Fraction::operator<=(const Fraction& other) const
 {
 	return (*this < other || *this == other);
+}
+
+//Converting
+//---------------------------------------------------------------------
+
+int Fraction::ToInt() const
+{
+	int result = std::round(static_cast<double>(_numerator) / _denominator);
+	return result;
+}
+
+float Fraction::ToFloat() const
+{
+	float result = static_cast<float>(_numerator) / _denominator;
+	return result;
+}
+
+bool Fraction::ToBool() const
+{
+	bool result = !(this->ToInt() == 0);
+	return result;
+}
+
+std::string Fraction::ToString() const
+{
+	return std::to_string(_numerator) + "/" + std::to_string(_denominator);
 }
 
 //Others
