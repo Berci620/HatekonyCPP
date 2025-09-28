@@ -15,6 +15,8 @@ public:
 	Fraction operator-(const Fraction& other) const;
 	Fraction& operator*=(const Fraction& other);
 	Fraction operator*(const Fraction& other) const;
+	Fraction& operator/=(const Fraction& other);
+	Fraction operator/(const Fraction& other) const;
 
 private:
 	int _numerator;

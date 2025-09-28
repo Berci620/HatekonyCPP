@@ -24,6 +24,10 @@ Fraction::Fraction(int numerator, int denominator)	//_numerator, _denominator co
 	{
 		throw std::invalid_argument("Denominator was zero!");
 	}
+	if (denominator < 0) 
+	{
+		_denominator *= -1; _numerator *= -1;
+	}
 	Simplify();
 
 }
@@ -52,7 +56,7 @@ Fraction& Fraction::operator+=(const Fraction& other)
 {
 	int lcm = LCM(_denominator, other._denominator);
 	int aMult = lcm / _denominator;
-	int bMult = lcm / other._denominator ;
+	int bMult = lcm / other._denominator;
 
 	_numerator *= aMult; _denominator *= aMult;
 
@@ -63,7 +67,7 @@ Fraction& Fraction::operator+=(const Fraction& other)
 	return *this;
 }
 
-Fraction Fraction::operator+(const Fraction& other) const 
+Fraction Fraction::operator+(const Fraction& other) const
 {
 	Fraction result(*this);
 	result += other;
@@ -107,11 +111,37 @@ Fraction Fraction::operator*(const Fraction& other) const
 	return result;
 }
 
+Fraction& Fraction::operator/=(const Fraction& other)
+{
+	_numerator *= other._denominator;
+	_denominator *= other._numerator;
+
+	if (_denominator == 0)
+	{
+		throw std::invalid_argument("Cannot divide with zero!");
+	}
+	if (_denominator < 0)
+	{
+		_denominator *= -1; _numerator *= -1;
+	}
+
+	this->Simplify();
+
+	return *this;
+}
+
+Fraction Fraction::operator/(const Fraction& other) const
+{
+	Fraction result(*this);
+	result /= other;
+	return result;
+}
+
 int Fraction::GCD(int a, int b)
 {
 	int gcd = std::min(std::abs(a), std::abs(b));
 
-	if (gcd == 0) {return 1;} // Handling exception->(if any is 0, it would divide with 0)
+	if (gcd == 0) { return 1; } // Handling exception->(if any is 0, it would divide with 0)
 
 	if (a % gcd == 0 && b % gcd == 0)
 	{
@@ -150,7 +180,7 @@ void Fraction::FractionFromFloat(double decimalFraction)
 {
 	int n = 0, gcd;
 	double delt = 0.0001;
-	
+
 	while (std::abs(decimalFraction - static_cast<int>(std::round(decimalFraction))) > delt)
 	{
 		decimalFraction *= 10;
