@@ -153,6 +153,11 @@ bool Fraction::operator==(const Fraction& other) const
 	return (_numerator == other._numerator && _denominator == other._denominator);
 }
 
+bool Fraction::operator!=(const Fraction& other) const
+{
+	return !(*this == other);
+}
+
 bool Fraction::operator>(const Fraction& other) const
 {
 	if (static_cast<double>(_numerator) / _denominator > static_cast<double>(other._numerator) / other._denominator) {
