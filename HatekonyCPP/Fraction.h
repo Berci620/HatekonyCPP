@@ -18,6 +18,12 @@ public:
 	Fraction& operator/=(const Fraction& other);
 	Fraction operator/(const Fraction& other) const;
 
+	bool operator==(const Fraction& other) const;
+	bool operator>(const Fraction& other) const;
+	bool operator>=(const Fraction& other) const;
+	bool operator<(const Fraction& other) const;
+	bool operator<=(const Fraction& other) const;
+
 private:
 	int _numerator;
 	int _denominator;
