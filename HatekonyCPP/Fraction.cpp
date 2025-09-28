@@ -4,7 +4,7 @@
 
 #include "Fraction.h"
 
-//Constructors
+// Constructors
 //---------------------------------------------------------------------
 
 Fraction::Fraction(int denominator)	//_denominator constructor
@@ -47,7 +47,7 @@ Fraction::Fraction(const Fraction& fraction)
 	_denominator = fraction._denominator;
 }
 
-//Output
+// I/O
 //---------------------------------------------------------------------
 
 float Fraction::GetFraction()
@@ -62,7 +62,38 @@ std::ostream& operator<<(std::ostream& os, const Fraction& fraction)
 	return os;
 }
 
-//Basic arithmetic operations
+std::istream& operator>>(std::istream& is, Fraction& fraction)
+{
+	int numerator = 0, denominator = 0, i = 0, idx;
+	std::string input;
+	is >> input;
+	auto pos = input.find('/');
+
+	if (pos != input.npos)
+	{
+		idx = static_cast<int>(pos);
+		while (i < idx)
+		{
+			numerator *= 10;
+			numerator += (static_cast<int>(input[i])-48);
+			i++;
+		}
+		i++;
+		while (i < input.size()) 
+		{
+			denominator *= 10;
+			denominator += (static_cast<int>(input[i])-48);
+			i++;
+		}
+
+		fraction = Fraction(numerator, denominator);
+		return is;
+	}
+
+	throw std::invalid_argument("The input format was not correct! (numerator/denominator)");
+}
+
+// Basic arithmetic operations
 //---------------------------------------------------------------------
 
 Fraction& Fraction::operator=(const Fraction& other) = default;
@@ -152,7 +183,7 @@ Fraction Fraction::operator/(const Fraction& other) const
 	return result;
 }
 
-//Comparisons
+// Comparisons
 //---------------------------------------------------------------------
 
 bool Fraction::operator==(const Fraction& other) const
@@ -191,7 +222,7 @@ bool Fraction::operator<=(const Fraction& other) const
 	return (*this < other || *this == other);
 }
 
-//Converting
+// Converting
 //---------------------------------------------------------------------
 
 int Fraction::ToInt() const
@@ -217,7 +248,7 @@ std::string Fraction::ToString() const
 	return std::to_string(_numerator) + "/" + std::to_string(_denominator);
 }
 
-//Others
+// Others
 //---------------------------------------------------------------------
 
 int Fraction::GCD(int a, int b)		// Greatest Common Divisor
