@@ -92,9 +92,24 @@ Fraction Fraction::operator-(const Fraction& other) const
 	return result;
 }
 
+Fraction& Fraction::operator*=(const Fraction& other)
+{
+	_numerator *= other._numerator;
+	_denominator *= other._denominator;
+	this->Simplify();
+	return *this;
+}
+
+Fraction Fraction::operator*(const Fraction& other) const
+{
+	Fraction result(*this);
+	result *= other;
+	return result;
+}
+
 int Fraction::GCD(int a, int b)
 {
-	int gcd = std::min(a, b);
+	int gcd = std::min(std::abs(a), std::abs(b));
 
 	if (gcd == 0) {return 1;} // Handling exception->(if any is 0, it would divide with 0)
 
@@ -147,7 +162,7 @@ void Fraction::FractionFromFloat(double decimalFraction)
 	_numerator = decimalFraction;
 	_denominator = pow(10, n);
 
-	gcd = GCD(_numerator, _denominator);
+	gcd = std::abs(GCD(_numerator, _denominator)); //std::abs because we store -/+ in _numerator
 
 	_numerator /= gcd;
 	_denominator /= gcd;
