@@ -70,10 +70,33 @@ Fraction Fraction::operator+(const Fraction& other) const
 	return result;
 }
 
+Fraction& Fraction::operator-=(const Fraction& other)
+{
+	int lcm = LCM(_denominator, other._denominator);
+	int aMult = lcm / _denominator;
+	int bMult = lcm / other._denominator;
+
+	_numerator *= aMult; _denominator *= aMult;
+
+	_numerator -= (other._numerator * bMult);
+
+	this->Simplify();
+
+	return *this;
+}
+
+Fraction Fraction::operator-(const Fraction& other) const
+{
+	Fraction result(*this);
+	result -= other;
+	return result;
+}
 
 int Fraction::GCD(int a, int b)
 {
 	int gcd = std::min(a, b);
+
+	if (gcd == 0) {return 1;} // Handling exception->(if any is 0, it would divide with 0)
 
 	if (a % gcd == 0 && b % gcd == 0)
 	{
