@@ -137,7 +137,7 @@ Fraction Fraction::operator/(const Fraction& other) const
 	return result;
 }
 
-int Fraction::GCD(int a, int b)
+int Fraction::GCD(int a, int b)		// Greatest Common Divisor
 {
 	int gcd = std::min(std::abs(a), std::abs(b));
 
@@ -163,20 +163,20 @@ int Fraction::GCD(int a, int b)
 	return gcd;
 }
 
-int Fraction::LCM(int a, int b)
+int Fraction::LCM(int a, int b)		// Least Common Multiple
 {
 	int result = (a * b) / GCD(a, b);
 	return result;
 }
 
-void Fraction::Simplify()
+void Fraction::Simplify()	//	Divide fractions numerator and denominator to get the most simple form
 {
 	int gcd = GCD(_numerator, _denominator);
 	_denominator /= gcd;
 	_numerator /= gcd;
 }
 
-void Fraction::FractionFromFloat(double decimalFraction)
+void Fraction::FractionFromFloat(double decimalFraction)	// Helps the double constructor
 {
 	int n = 0, gcd;
 	double delt = 0.0001;
