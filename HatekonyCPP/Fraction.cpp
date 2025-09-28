@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include <cmath>
+#include <iostream>
 
 #include "Fraction.h"
 
@@ -53,6 +54,12 @@ float Fraction::GetFraction()
 {
 	float result = static_cast<float>(_numerator) / _denominator;
 	return result;
+}
+
+std::ostream& operator<<(std::ostream& os, const Fraction& fraction)
+{
+	os << fraction._numerator << "/" << fraction._denominator << std::endl;
+	return os;
 }
 
 //Basic arithmetic operations

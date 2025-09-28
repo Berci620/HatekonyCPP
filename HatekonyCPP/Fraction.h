@@ -6,7 +6,9 @@ public:
 	Fraction(int numerator, int denominator);
 	Fraction(const double& decimalFraction);
 	Fraction(const Fraction& fraction);
+
 	float GetFraction();
+	friend std::ostream& operator<<(std::ostream& os, const Fraction& fraction);
 
 	Fraction& operator=(const Fraction& other);
 	Fraction& operator+=(const Fraction& other);
