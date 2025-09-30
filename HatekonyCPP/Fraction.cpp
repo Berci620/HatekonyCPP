@@ -7,7 +7,7 @@
 // Constructors
 //---------------------------------------------------------------------
 
-Fraction::Fraction(int denominator)	//_denominator constructor
+Fraction::Fraction(int denominator)	//_denominator constructor   // const int denominator
 	:_denominator(denominator)
 	, _numerator(1)
 {
@@ -18,7 +18,7 @@ Fraction::Fraction(int denominator)	//_denominator constructor
 
 }
 
-Fraction::Fraction(int numerator, int denominator)	//_numerator, _denominator constructor
+Fraction::Fraction(int numerator, int denominator)	//_numerator, _denominator constructor   / const int numerator, const int denominator
 	:_denominator(denominator)
 	, _numerator(numerator)
 {
@@ -41,7 +41,7 @@ Fraction::Fraction(const double& decimalFraction)
 	;
 }
 
-Fraction::Fraction(const Fraction& fraction)
+Fraction::Fraction(const Fraction& fraction) // Erre mi szükség van? Főleg úgy, hogy a konstruktor függvényen belül, a konstruálást követően ad értéket az adattagoknak?
 {
 	_numerator = fraction._numerator;
 	_denominator = fraction._denominator;
@@ -50,7 +50,7 @@ Fraction::Fraction(const Fraction& fraction)
 // I/O
 //---------------------------------------------------------------------
 
-float Fraction::GetFraction()
+float Fraction::GetFraction() // Ez miben különbözik a ToFloat() metódustól?
 {
 	float result = static_cast<float>(_numerator) / _denominator;
 	return result;
@@ -65,7 +65,7 @@ std::ostream& operator<<(std::ostream& os, const Fraction& fraction)
 std::istream& operator>>(std::istream& is, Fraction& fraction)
 {
 	std::string input;
-	is >> input;
+	is >> input; // Biztos, hogy nem lesz whitespace a bemenetben?
 	fraction = Parse(input);
 	return is;
 }
@@ -81,11 +81,11 @@ Fraction& Fraction::operator+=(const Fraction& other)
 	int aMult = lcm / _denominator;
 	int bMult = lcm / other._denominator;
 
-	_numerator *= aMult; _denominator *= aMult;
+	_numerator *= aMult; _denominator *= aMult; // Egy sor, egy utasítás. Így nehéz az olvasás.
 
 	_numerator += (other._numerator * bMult);
 
-	this->Simplify();
+	this->Simplify(); // Kell a this ?
 
 	return *this;
 }
@@ -186,7 +186,7 @@ bool Fraction::operator>=(const Fraction& other) const
 	return (*this == other || *this > other);
 }
 
-bool Fraction::operator<(const Fraction& other) const
+bool Fraction::operator<(const Fraction& other) const // A < operátor a >= operátor tagadása.
 {
 	if (static_cast<double>(_numerator) / _denominator < static_cast<double>(other._numerator) / other._denominator) {
 		return true;
@@ -202,7 +202,7 @@ bool Fraction::operator<=(const Fraction& other) const
 // Converting
 //---------------------------------------------------------------------
 
-int Fraction::ToInt() const
+int Fraction::ToInt() const // Legyen inkább konverziós operátor: operator int() const szignatúrával! Ugyanez érvényes az összes többi konverziós műveletére.
 {
 	int result = std::round(static_cast<double>(_numerator) / _denominator);
 	return result;
@@ -228,7 +228,8 @@ std::string Fraction::ToString() const
 // Others
 //---------------------------------------------------------------------
 
-int Fraction::GCD(int a, int b)		// Greatest Common Divisor
+// Érdemes lenne átnézni az Euklideszi algoritmust és azt implementálni!
+int Fraction::GCD(int a, int b)		// Greatest Common Divisor   // const int a, const int b   // Van a nyelvben std::gcd függvény, érdemes azt használni.
 {
 	int gcd = std::min(std::abs(a), std::abs(b));
 
@@ -254,7 +255,7 @@ int Fraction::GCD(int a, int b)		// Greatest Common Divisor
 	return gcd;
 }
 
-int Fraction::LCM(int a, int b)		// Least Common Multiple
+int Fraction::LCM(int a, int b)		// Least Common Multiple   // const int a, const int b
 {
 	int result = (a * b) / GCD(a, b);
 	return result;
@@ -262,23 +263,23 @@ int Fraction::LCM(int a, int b)		// Least Common Multiple
 
 void Fraction::Simplify()	//	Divide fractions numerator and denominator to get the most simple form
 {
-	int gcd = GCD(_numerator, _denominator);
+	int gcd = GCD(_numerator, _denominator);  // const int gcd
 	_denominator /= gcd;
 	_numerator /= gcd;
 }
 
-void Fraction::FractionFromFloat(double decimalFraction)	// Helps the double constructor
+void Fraction::FractionFromFloat(double decimalFraction)	// Helps the double constructor   // const double decimalFraction
 {
 	int n = 0, gcd;
 	double delt = 0.0001;
 
-	while (std::abs(decimalFraction - static_cast<int>(std::round(decimalFraction))) > delt)
+	while (std::abs(decimalFraction - static_cast<int>(std::round(decimalFraction))) > delt) // az int kasztolásnak nincs sok értelme, mert az eredményt utána kivonja egy double változóból
 	{
 		decimalFraction *= 10;
 		n++;
 	}
 
-	decimalFraction = std::round(decimalFraction);
+	decimalFraction = std::round(decimalFraction); // Miért nem a _numerator-ba teszi be rögtön?
 
 	_numerator = decimalFraction;
 	_denominator = pow(10, n);
@@ -292,10 +293,10 @@ void Fraction::FractionFromFloat(double decimalFraction)	// Helps the double con
 // Outside functions
 //---------------------------------------------------------------------
 
-Fraction Parse(const std::string& value)
+Fraction Parse(const std::string& value)  // A Parse legyen osztályon belüli statikus függvény! Így osztálytól függetlenül hívható, ami ellentmondásokhoz vezethet.
 {
-	int numerator = 0, denominator = 0, i = 0, idx;
-	bool is_negative = 0;
+	int numerator = 0, denominator = 0, i = 0, idx; // Egy utasításban érdemes csak egy változót deklarálni.
+	bool is_negative = 0; // Ha bool, akkor false legyen a kezdeti érték!
 	auto pos = value.find('/');
 
 	if (pos != value.npos)
@@ -320,7 +321,7 @@ Fraction Parse(const std::string& value)
 		if (is_negative) { numerator *= -1; }
 
 		Fraction result = Fraction(numerator, denominator);
-		return result;
+		return result; // Nem kell a result lokális temporális változó. return Fraction{ numerator, denominator } is működik.
 	}
 
 	throw std::invalid_argument("The input format was not correct! (numerator/denominator)");
