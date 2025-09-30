@@ -218,44 +218,18 @@ std::string Fraction::ToString() const
 // Others
 //---------------------------------------------------------------------
 
-// Érdemes lenne átnézni az Euklideszi algoritmust és azt implementálni!
-int Fraction::GCD(const int a, const int b)		// Greatest Common Divisor   // Van a nyelvben std::gcd függvény, érdemes azt használni.
-{
-	int gcd = std::min(std::abs(a), std::abs(b));
-
-	if (gcd == 0) { return 1; } // Handling exception->(if any is 0, it would divide with 0)
-
-	if (a % gcd == 0 && b % gcd == 0)
-	{
-		return gcd;
-	}
-	else
-	{
-		gcd /= 2;
-	}
-
-	while (gcd > 1)
-	{
-		if (a % gcd == 0 && b % gcd == 0)
-		{
-			return gcd;
-		}
-		gcd--;
-	}
-	return gcd;
-}
-
 void Fraction::Simplify()	//	Divide fractions numerator and denominator to get the most simple form
 {
-	const int gcd = GCD(_numerator, _denominator);
+	const int gcd = std::gcd(_numerator, _denominator);
 	_denominator /= gcd;
 	_numerator /= gcd;
 }
 
 void Fraction::FractionFromFloat(double decimalFraction)	// Helps the double constructor   // const double decimalFraction
 {
-	int n = 0, gcd;
-	double delt = 0.0001;
+	int n = 0;
+	int gcd;
+	const double delt = 0.0001;
 
 	while (std::abs(decimalFraction - static_cast<int>(std::round(decimalFraction))) > delt) // az int kasztolásnak nincs sok értelme, mert az eredményt utána kivonja egy double változóból
 	{
@@ -268,7 +242,7 @@ void Fraction::FractionFromFloat(double decimalFraction)	// Helps the double con
 	_numerator = decimalFraction;
 	_denominator = pow(10, n);
 
-	gcd = std::abs(GCD(_numerator, _denominator)); //std::abs because we store -/+ in _numerator
+	gcd = std::gcd(_numerator, _denominator);
 
 	_numerator /= gcd;
 	_denominator /= gcd;

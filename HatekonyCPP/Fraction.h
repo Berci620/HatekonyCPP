@@ -38,7 +38,6 @@ public:
 private:
 	int _numerator;
 	int _denominator;
-	int GCD(int a, int b);
 	void Simplify();
 	void FractionFromFloat(double decimalFraction);
 };
