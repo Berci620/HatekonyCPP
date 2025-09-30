@@ -58,7 +58,8 @@ std::ostream& operator<<(std::ostream& os, const Fraction& fraction)
 std::istream& operator>>(std::istream& is, Fraction& fraction)
 {
 	std::string input;
-	is >> input; // Biztos, hogy nem lesz whitespace a bemenetben?
+	getline(is, input);
+	input.erase(remove(input.begin(), input.end(), ' '), input.end());
 	fraction = Parse(input);
 	return is;
 }
