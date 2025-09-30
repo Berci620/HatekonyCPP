@@ -10,7 +10,6 @@ public:
 	Fraction(const double& decimalFraction);
 	Fraction(const Fraction& fraction) = default;
 
-	float GetFraction();
 	friend std::ostream& operator<<(std::ostream& os, const Fraction& fraction);
 	friend std::istream& operator>>(std::istream& is, Fraction& fraction);
 	

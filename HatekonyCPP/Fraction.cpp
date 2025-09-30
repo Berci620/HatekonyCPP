@@ -43,12 +43,6 @@ Fraction::Fraction(const double& decimalFraction)
 // I/O
 //---------------------------------------------------------------------
 
-float Fraction::GetFraction() // Ez miben különbözik a ToFloat() metódustól?
-{
-	float result = static_cast<float>(_numerator) / _denominator;
-	return result;
-}
-
 std::ostream& operator<<(std::ostream& os, const Fraction& fraction)
 {
 	os << fraction.ToString() << std::endl;
