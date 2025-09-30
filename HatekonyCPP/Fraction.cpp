@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include <cmath>
 #include <iostream>
+#include <numeric>
 
 #include "Fraction.h"
 
@@ -65,15 +66,16 @@ Fraction& Fraction::operator=(const Fraction& other) = default;
 
 Fraction& Fraction::operator+=(const Fraction& other)
 {
-	int lcm = LCM(_denominator, other._denominator);
-	int aMult = lcm / _denominator;
-	int bMult = lcm / other._denominator;
+	const int lcm = std::lcm(_denominator, other._denominator);
+	const int aMult = lcm / _denominator;
+	const int bMult = lcm / other._denominator;
 
-	_numerator *= aMult; _denominator *= aMult; // Egy sor, egy utasítás. Így nehéz az olvasás.
+	_numerator *= aMult;
+	_denominator *= aMult;
 
 	_numerator += (other._numerator * bMult);
 
-	this->Simplify(); // Kell a this ?
+	Simplify();
 
 	return *this;
 }
@@ -87,15 +89,15 @@ Fraction Fraction::operator+(const Fraction& other) const
 
 Fraction& Fraction::operator-=(const Fraction& other)
 {
-	int lcm = LCM(_denominator, other._denominator);
-	int aMult = lcm / _denominator;
-	int bMult = lcm / other._denominator;
+	const int lcm = std::lcm(_denominator, other._denominator);
+	const int aMult = lcm / _denominator;
+	const int bMult = lcm / other._denominator;
 
 	_numerator *= aMult; _denominator *= aMult;
 
 	_numerator -= (other._numerator * bMult);
 
-	this->Simplify();
+	Simplify();
 
 	return *this;
 }
@@ -111,7 +113,7 @@ Fraction& Fraction::operator*=(const Fraction& other)
 {
 	_numerator *= other._numerator;
 	_denominator *= other._denominator;
-	this->Simplify();
+	Simplify();
 	return *this;
 }
 
@@ -136,7 +138,7 @@ Fraction& Fraction::operator/=(const Fraction& other)
 		_denominator *= -1; _numerator *= -1;
 	}
 
-	this->Simplify();
+	Simplify();
 
 	return *this;
 }
