@@ -46,7 +46,7 @@ Fraction::Fraction(const double& decimalFraction)
 
 std::ostream& operator<<(std::ostream& os, const Fraction& fraction)
 {
-	os << fraction.ToString() << std::endl;
+	os << static_cast<std::string>(fraction) << std::endl;
 	return os;
 }
 
@@ -192,25 +192,25 @@ bool Fraction::operator<=(const Fraction& other) const
 // Converting
 //---------------------------------------------------------------------
 
-int Fraction::ToInt() const // Legyen inkább konverziós operátor: operator int() const szignatúrával! Ugyanez érvényes az összes többi konverziós műveletére.
+Fraction::operator int() const
 {
-	int result = std::round(static_cast<double>(_numerator) / _denominator);
+	const int result = std::round(static_cast<double>(_numerator) / _denominator);
 	return result;
 }
 
-float Fraction::ToFloat() const
+Fraction::operator float() const
 {
-	float result = static_cast<float>(_numerator) / _denominator;
+	const float result = static_cast<float>(_numerator) / _denominator;
 	return result;
 }
 
-bool Fraction::ToBool() const
+Fraction::operator bool() const
 {
-	bool result = !(this->ToInt() == 0);
+	const bool result = !(static_cast<int>(*this) == 0);
 	return result;
 }
 
-std::string Fraction::ToString() const
+Fraction::operator std::string() const
 {
 	return std::to_string(_numerator) + "/" + std::to_string(_denominator);
 }

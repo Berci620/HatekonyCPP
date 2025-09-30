@@ -30,10 +30,10 @@ public:
 	bool operator<(const Fraction& other) const;
 	bool operator<=(const Fraction& other) const;
 
-	int ToInt() const;
-	float ToFloat() const;
-	bool ToBool() const;
-	std::string ToString() const;
+	operator int() const;
+	operator float() const;
+	operator bool() const;
+	operator std::string() const;
 
 private:
 	int _numerator;
