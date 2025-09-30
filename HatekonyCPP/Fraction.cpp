@@ -233,20 +233,17 @@ bool Fraction::operator<=(const Fraction& other) const
 
 Fraction::operator int() const
 {
-	const int result = std::round(static_cast<double>(_numerator) / _denominator);
-	return result;
+	return static_cast<int>(std::round(static_cast<double>(_numerator) / _denominator));
 }
 
 Fraction::operator float() const
 {
-	const float result = static_cast<float>(_numerator) / _denominator;
-	return result;
+	return static_cast<float>(_numerator) / _denominator;
 }
 
 Fraction::operator bool() const
 {
-	const bool result = !(static_cast<int>(*this) == 0);
-	return result;
+	return !(static_cast<int>(*this) == 0);
 }
 
 Fraction::operator std::string() const
