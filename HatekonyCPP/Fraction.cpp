@@ -38,13 +38,6 @@ Fraction::Fraction(const int numerator, const int denominator)	//_numerator, _de
 Fraction::Fraction(const double& decimalFraction)
 {
 	FractionFromFloat(decimalFraction);
-	;
-}
-
-Fraction::Fraction(const Fraction& fraction) // Erre mi szükség van? Főleg úgy, hogy a konstruktor függvényen belül, a konstruálást követően ad értéket az adattagoknak?
-{
-	_numerator = fraction._numerator;
-	_denominator = fraction._denominator;
 }
 
 // I/O

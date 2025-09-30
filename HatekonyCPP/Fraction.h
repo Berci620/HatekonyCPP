@@ -8,7 +8,7 @@ public:
 	Fraction(int denominator);
 	Fraction(int numerator, int denominator);
 	Fraction(const double& decimalFraction);
-	Fraction(const Fraction& fraction);
+	Fraction(const Fraction& fraction) = default;
 
 	float GetFraction();
 	friend std::ostream& operator<<(std::ostream& os, const Fraction& fraction);
