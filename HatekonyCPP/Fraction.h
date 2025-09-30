@@ -39,7 +39,7 @@ private:
 	int _numerator;
 	int _denominator;
 	void Simplify();
-	void FractionFromFloat(double decimalFraction);
+	void FractionFromDouble(double decimalFraction);
 };
 
 Fraction Parse(const std::string& value);

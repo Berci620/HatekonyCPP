@@ -38,7 +38,7 @@ Fraction::Fraction(const int numerator, const int denominator)	//_numerator, _de
 
 Fraction::Fraction(const double& decimalFraction)
 {
-	FractionFromFloat(decimalFraction);
+	FractionFromDouble(decimalFraction);
 }
 
 // I/O
@@ -225,21 +225,19 @@ void Fraction::Simplify()	//	Divide fractions numerator and denominator to get t
 	_numerator /= gcd;
 }
 
-void Fraction::FractionFromFloat(double decimalFraction)	// Helps the double constructor   // const double decimalFraction
+void Fraction::FractionFromDouble(double decimalFraction)	// Helps the double constructor   // const double decimalFraction
 {
 	int n = 0;
 	int gcd;
 	const double delt = 0.0001;
 
-	while (std::abs(decimalFraction - static_cast<int>(std::round(decimalFraction))) > delt) // az int kasztolásnak nincs sok értelme, mert az eredményt utána kivonja egy double változóból
+	while (std::abs(decimalFraction - std::round(decimalFraction)) > delt)
 	{
 		decimalFraction *= 10;
 		n++;
 	}
 
-	decimalFraction = std::round(decimalFraction); // Miért nem a _numerator-ba teszi be rögtön?
-
-	_numerator = decimalFraction;
+	_numerator = std::round(decimalFraction);
 	_denominator = pow(10, n);
 
 	gcd = std::gcd(_numerator, _denominator);
