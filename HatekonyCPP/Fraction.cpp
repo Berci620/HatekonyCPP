@@ -245,12 +245,6 @@ int Fraction::GCD(const int a, const int b)		// Greatest Common Divisor   // Van
 	return gcd;
 }
 
-int Fraction::LCM(const int a, const int b)		// Least Common Multiple
-{
-	int result = (a * b) / GCD(a, b);
-	return result;
-}
-
 void Fraction::Simplify()	//	Divide fractions numerator and denominator to get the most simple form
 {
 	const int gcd = GCD(_numerator, _denominator);
