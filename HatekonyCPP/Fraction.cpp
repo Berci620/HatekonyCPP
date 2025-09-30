@@ -5,6 +5,45 @@
 
 #include "Fraction.h"
 
+//Static
+//---------------------------------------------------------------------
+
+Fraction Fraction::Parse(const std::string& value)
+{
+	int numerator = 0;
+	int denominator = 0;
+	int i = 0;
+	int idx;
+	bool is_negative = false;
+	const auto pos = value.find('/');
+
+	if (pos != value.npos)	// value.find('/') gives value.npos as result, if no character was found
+	{
+		if (value[i] == '-') { is_negative = true; i++; }
+
+		idx = static_cast<int>(pos);
+		while (i < idx)
+		{
+			numerator *= 10;
+			numerator += (static_cast<int>(value[i]) - 48);
+			i++;
+		}
+		i++;
+		while (i < value.size())
+		{
+			denominator *= 10;
+			denominator += (static_cast<int>(value[i]) - 48);
+			i++;
+		}
+
+		if (is_negative) { numerator *= -1; }
+
+		return Fraction(numerator, denominator);
+	}
+
+	throw std::invalid_argument("The input format was not correct! (numerator/denominator)");
+}
+
 // Constructors
 //---------------------------------------------------------------------
 
@@ -55,7 +94,7 @@ std::istream& operator>>(std::istream& is, Fraction& fraction)
 	std::string input;
 	getline(is, input);
 	input.erase(remove(input.begin(), input.end(), ' '), input.end());
-	fraction = Parse(input);
+	fraction = Fraction::Parse(input);
 	return is;
 }
 
@@ -244,41 +283,4 @@ void Fraction::FractionFromDouble(double decimalFraction)	// Helps the double co
 
 	_numerator /= gcd;
 	_denominator /= gcd;
-}
-
-// Outside functions
-//---------------------------------------------------------------------
-
-Fraction Parse(const std::string& value)  // A Parse legyen osztályon belüli statikus függvény! Így osztálytól függetlenül hívható, ami ellentmondásokhoz vezethet.
-{
-	int numerator = 0, denominator = 0, i = 0, idx; // Egy utasításban érdemes csak egy változót deklarálni.
-	bool is_negative = 0; // Ha bool, akkor false legyen a kezdeti érték!
-	auto pos = value.find('/');
-
-	if (pos != value.npos)
-	{
-		if (value[i] == '-') { is_negative = true; i++; }
-
-		idx = static_cast<int>(pos);
-		while (i < idx)
-		{
-			numerator *= 10;
-			numerator += (static_cast<int>(value[i]) - 48);
-			i++;
-		}
-		i++;
-		while (i < value.size())
-		{
-			denominator *= 10;
-			denominator += (static_cast<int>(value[i]) - 48);
-			i++;
-		}
-
-		if (is_negative) { numerator *= -1; }
-
-		Fraction result = Fraction(numerator, denominator);
-		return result; // Nem kell a result lokális temporális változó. return Fraction{ numerator, denominator } is működik.
-	}
-
-	throw std::invalid_argument("The input format was not correct! (numerator/denominator)");
 }

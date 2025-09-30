@@ -5,6 +5,9 @@
 class Fraction
 {
 public:
+	static Fraction Parse(const std::string& value);
+
+public:
 	Fraction(int denominator);
 	Fraction(int numerator, int denominator);
 	Fraction(const double& decimalFraction);
@@ -41,5 +44,3 @@ private:
 	void Simplify();
 	void FractionFromDouble(double decimalFraction);
 };
-
-Fraction Parse(const std::string& value);
