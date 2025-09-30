@@ -7,7 +7,7 @@
 // Constructors
 //---------------------------------------------------------------------
 
-Fraction::Fraction(int denominator)	//_denominator constructor   // const int denominator
+Fraction::Fraction(const int denominator)	//_denominator constructor
 	:_denominator(denominator)
 	, _numerator(1)
 {
@@ -18,7 +18,7 @@ Fraction::Fraction(int denominator)	//_denominator constructor   // const int de
 
 }
 
-Fraction::Fraction(int numerator, int denominator)	//_numerator, _denominator constructor   / const int numerator, const int denominator
+Fraction::Fraction(const int numerator, const int denominator)	//_numerator, _denominator constructor
 	:_denominator(denominator)
 	, _numerator(numerator)
 {
@@ -186,9 +186,9 @@ bool Fraction::operator>=(const Fraction& other) const
 	return (*this == other || *this > other);
 }
 
-bool Fraction::operator<(const Fraction& other) const // A < operátor a >= operátor tagadása.
+bool Fraction::operator<(const Fraction& other) const
 {
-	if (static_cast<double>(_numerator) / _denominator < static_cast<double>(other._numerator) / other._denominator) {
+	if (!(*this >= other)) {
 		return true;
 	}
 	return false;
@@ -229,7 +229,7 @@ std::string Fraction::ToString() const
 //---------------------------------------------------------------------
 
 // Érdemes lenne átnézni az Euklideszi algoritmust és azt implementálni!
-int Fraction::GCD(int a, int b)		// Greatest Common Divisor   // const int a, const int b   // Van a nyelvben std::gcd függvény, érdemes azt használni.
+int Fraction::GCD(const int a, const int b)		// Greatest Common Divisor   // Van a nyelvben std::gcd függvény, érdemes azt használni.
 {
 	int gcd = std::min(std::abs(a), std::abs(b));
 
@@ -255,7 +255,7 @@ int Fraction::GCD(int a, int b)		// Greatest Common Divisor   // const int a, co
 	return gcd;
 }
 
-int Fraction::LCM(int a, int b)		// Least Common Multiple   // const int a, const int b
+int Fraction::LCM(const int a, const int b)		// Least Common Multiple
 {
 	int result = (a * b) / GCD(a, b);
 	return result;
@@ -263,7 +263,7 @@ int Fraction::LCM(int a, int b)		// Least Common Multiple   // const int a, cons
 
 void Fraction::Simplify()	//	Divide fractions numerator and denominator to get the most simple form
 {
-	int gcd = GCD(_numerator, _denominator);  // const int gcd
+	const int gcd = GCD(_numerator, _denominator);
 	_denominator /= gcd;
 	_numerator /= gcd;
 }
