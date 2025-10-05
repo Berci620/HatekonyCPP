@@ -75,7 +75,7 @@ Fraction::Fraction(const int numerator, const int denominator)	//_numerator, _de
 
 }
 
-Fraction::Fraction(const double& decimalFraction)
+Fraction::Fraction(const double decimalFraction)
 {
 	FractionFromDouble(decimalFraction);
 }
@@ -100,8 +100,6 @@ std::istream& operator>>(std::istream& is, Fraction& fraction)
 
 // Basic arithmetic operations
 //---------------------------------------------------------------------
-
-Fraction& Fraction::operator=(const Fraction& other) = default;
 
 Fraction& Fraction::operator+=(const Fraction& other)
 {
