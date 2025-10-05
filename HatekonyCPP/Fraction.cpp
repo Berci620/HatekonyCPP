@@ -47,15 +47,10 @@ Fraction Fraction::Parse(const std::string& value)
 // Constructors
 //---------------------------------------------------------------------
 
-Fraction::Fraction(const int denominator)	//_denominator constructor
-	:_denominator(denominator)
-	, _numerator(1)
+Fraction::Fraction(const int numerator)	//_denominator constructor
+	:_denominator(1)
+	, _numerator(numerator)
 {
-
-	if (denominator == 0) {
-		throw std::invalid_argument("Denominator was zero!");
-	}
-
 }
 
 Fraction::Fraction(const int numerator, const int denominator)	//_numerator, _denominator constructor
