@@ -8,8 +8,8 @@ public:
 	static Fraction Parse(const std::string& value);
 
 public:
-	Fraction(int denominator);
-	Fraction(int numerator, int denominator);
+	Fraction(const int denominator);
+	Fraction(const int numerator, const int denominator);
 	Fraction(const double& decimalFraction);
 	Fraction(const Fraction& fraction) = default;
 
